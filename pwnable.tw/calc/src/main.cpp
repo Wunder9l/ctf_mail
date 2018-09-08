@@ -6,11 +6,38 @@ struct parsed_numbers{
     int numbers[64];
 };
 
-struct numbers_struct
+
+void eval(parsed_numbers* numbers, char operation)
 {
-    int size;
-    int buffer[64];
-} ;
+    if(operation == '+')
+    {
+        int a = numbers->numbers[numbers->size  - 2];
+        int b = numbers->numbers[numbers->size  - 1];
+        numbers->numbers[numbers->size  - 1] = a+b;
+    }
+    else if(operation > '+')
+    {
+        if(operation == '-')
+        {
+            int a = numbers->numbers[numbers->size  - 2];
+            int b = numbers->numbers[numbers->size  - 1];
+            numbers->numbers[numbers->size  - 1] = a-b;
+        }
+        else if (operation == '/')
+        {
+            int a = numbers->numbers[numbers->size  - 2];
+            int b = numbers->numbers[numbers->size  - 1];
+            numbers->numbers[numbers->size  - 1] = a/b;
+        }
+    }
+    else if (operation == '*')
+    {
+        int a = numbers->numbers[numbers->size  - 2];
+        int b = numbers->numbers[numbers->size  - 1];
+        numbers->numbers[numbers->size  - 1] = a*b;
+    }
+    numbers->size = numbers->size - 1;
+}
 
 int parse_expr(char* buf, parsed_numbers* res){
     char* number_start = buf;
@@ -77,38 +104,6 @@ int parse_expr(char* buf, parsed_numbers* res){
     return 1;
 }
 
-
-void eval(struct numbers_struct * numbers, char operation)
-{
-    if(operation == '+')
-    {
-        int a = numbers->buffer[numbers->size  - 2];
-        int b = numbers->buffer[numbers->size  - 1];
-        numbers->buffer[numbers->size  - 1] = a+b;
-    }
-    else if(operation > '+')
-    {
-        if(operation == '-')
-        {
-            int a = numbers->buffer[numbers->size  - 2];
-            int b = numbers->buffer[numbers->size  - 1];
-            numbers->buffer[numbers->size  - 1] = a-b;
-        }
-        else if (operation == '/')
-        {
-            int a = numbers->buffer[numbers->size  - 2];
-            int b = numbers->buffer[numbers->size  - 1];
-            numbers->buffer[numbers->size  - 1] = a/b;
-        }
-    }
-    else if (operation == '*')
-    {
-        int a = numbers->buffer[numbers->size  - 2];
-        int b = numbers->buffer[numbers->size  - 1];
-        numbers->buffer[numbers->size  - 1] = a*b;
-    }
-    numbers->size = numbers->size - 1;
-}
 
 int get_expr(char * buf, int size)
 {
